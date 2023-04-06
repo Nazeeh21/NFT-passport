@@ -16,7 +16,7 @@ contract Passport is ERC721 {
 
     function collectStamp(CountryStamp countryStamp) external {
         require(msg.sender == owner, "Only the passport owner can collect stamps.");
-        uint256 countryStampTokenId = countryStamp.registerStamp();
+        uint256 countryStampTokenId = countryStamp.registerStamp(address(this));
         collectedStamps[countryStampTokenId] = address(countryStamp);
     }
 }
