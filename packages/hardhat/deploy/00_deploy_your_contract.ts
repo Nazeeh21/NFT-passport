@@ -1,5 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { INDIAN_FLAG } from "../utils";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -21,7 +22,17 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  await deploy("CountryStamp", {
+    from: deployer,
+    // Contract constructor arguments
+    args: ["India", "INR", INDIAN_FLAG],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
+  await deploy("Passport", {
     from: deployer,
     // Contract constructor arguments
     args: [deployer],
@@ -39,4 +50,4 @@ export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployYourContract.tags = ["CountryStamp"];
