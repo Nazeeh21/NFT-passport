@@ -1,22 +1,36 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./CountryStamp.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "./CountryStamp.sol"; // Make sure to import the CountryStamp contract
 
-contract Passport is ERC721 {
-    address public owner;
+contract Passport is ERC721URIStorage {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIdCounter;
 
-    mapping(uint256 => address) public collectedStamps;
+    constructor() ERC721("Passport", "PAS") {}
 
-    constructor(address _owner) ERC721("Passport", "PP") {
-        owner = _owner;
-        _mint(_owner, 0); // Mint passport with tokenId 0
+    function mintPassport(string memory dataUri) external returns (uint256) {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _mint(msg.sender, tokenId);
+        _setTokenURI(tokenId, dataUri);
+        return tokenId;
     }
 
-    function collectStamp(CountryStamp countryStamp) external {
-        require(msg.sender == owner, "Only the passport owner can collect stamps.");
-        uint256 countryStampTokenId = countryStamp.registerStamp(address(this));
-        collectedStamps[countryStampTokenId] = address(countryStamp);
+    function collectStamp(
+        uint256 passportTokenId,
+        address countryStampAddress
+    ) external {
+        require(_exists(passportTokenId), "Passport: Invalid passportTokenId");
+        require(ownerOf(passportTokenId) == msg.sender, "Passport: Caller not owner of passportTokenId");
+
+        CountryStamp countryStamp = CountryStamp(countryStampAddress);
+        uint256 countryStampTokenId = countryStamp.registerStamp();
+
+        // Transfer the countryStampTokenId to the passport owner
+        countryStamp.transferFrom(address(this), msg.sender, countryStampTokenId);
     }
 }

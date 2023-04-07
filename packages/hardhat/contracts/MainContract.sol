@@ -1,33 +1,36 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.0;
 
 import "./Passport.sol";
 import "./CountryStamp.sol";
 
 contract MainContract {
-    mapping(address => Passport) public passports;
-    mapping(string => CountryStamp) public countryStamps;
+    Passport public passport;
+    address[] public countryStampAddresses;
 
-    // Create a new passport for the user
-    function createPassport() external {
-        require(address(passports[msg.sender]) == address(0), "Passport already exists.");
-        Passport passport = new Passport(msg.sender);
-        passports[msg.sender] = passport;
+    constructor() {
+        passport = new Passport();
     }
 
-    // Create a new country stamp
-    function createCountryStamp(string memory countryName, string memory currency, string memory flagSvg) external {
-        require(address(countryStamps[countryName]) == address(0), "Country stamp already exists.");
-        CountryStamp countryStamp = new CountryStamp(countryName, currency, flagSvg);
-        countryStamps[countryName] = countryStamp;
+    function createPassport(string memory dataUri) public returns (uint256) {
+        return passport.mintPassport(dataUri);
     }
 
-    // Collect a country stamp for the user's passport
-    function collectStamp(string memory countryName) external {
-        require(address(passports[msg.sender]) != address(0), "Passport does not exist.");
-        require(address(countryStamps[countryName]) != address(0), "Country stamp does not exist.");
-        Passport userPassport = passports[msg.sender];
-        CountryStamp countryStamp = countryStamps[countryName];
-        userPassport.collectStamp(countryStamp);
+    function collectStamp(
+        uint256 passportTokenId,
+        address countryStampAddress,
+        string memory dataUri
+    ) public {
+        passport.collectStamp(passportTokenId, countryStampAddress, dataUri);
+    }
+
+    function createCountryStamp(string memory countryName, string memory currency) public returns (address) {
+        CountryStamp countryStamp = new CountryStamp(countryName, currency);
+        countryStampAddresses.push(address(countryStamp));
+        return address(countryStamp);
+    }
+
+    function getCountryStamps() public view returns (address[] memory) {
+        return countryStampAddresses;
     }
 }
