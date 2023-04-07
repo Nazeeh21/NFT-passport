@@ -17,12 +17,13 @@ contract CountryStamp is ERC721URIStorage {
         countryName = _countryName;
         currency = _currency;
         dataUri = _dataUri;
+        _tokenIdCounter.increment();
     }
 
-    function registerStamp() external returns (uint256) {
+    function registerStamp(address caller) external returns (uint256) {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _mint(msg.sender, tokenId);
+        _mint(caller, tokenId);
         _setTokenURI(tokenId, dataUri);
         return tokenId;
     }
