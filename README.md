@@ -1,5 +1,7 @@
 # Scaffold-Eth 2
 
+Youtube video link: https://youtu.be/qb0VusN3qMg
+
 ⚠️ This project is currently under active development. Things might break. Feel free to check the open issues & create new ones.
 
 Scaffold-Eth 2 is an open-source toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.

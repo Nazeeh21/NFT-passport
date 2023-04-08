@@ -9,6 +9,7 @@ import Passport from "~~/components/Passport";
 import { Spinner } from "~~/components/Spinner";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
+import YourStamps from "~~/components/YourStamps";
 
 const Home: NextPage = () => {
   const { address, isConnected } = useAccount();
@@ -21,7 +22,7 @@ const Home: NextPage = () => {
     contractName: "MainContract",
     functionName: "userToPassportId",
     args: [address],
-    watch: true
+    watch: true,
   });
 
   const { data: userPassportMetadata } = useContractRead({
@@ -113,7 +114,9 @@ const Home: NextPage = () => {
           <div>{userPassportMetadata && <Passport metadata={userPassportMetadata as string} />}</div>
         )}
       </div>
-      <div></div>
+      <div>
+        <YourStamps />
+      </div>
     </>
   );
 };

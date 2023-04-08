@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         MainContract: {
-          address: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+          address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
           abi: [
             {
               inputs: [],
@@ -93,6 +93,37 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "user",
+                  type: "address",
+                },
+              ],
+              name: "getStampsCollectedByAddress",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "string",
+                      name: "countryName",
+                      type: "string",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "stampTokenId",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct MainContract.StampsCollected[]",
+                  name: "",
+                  type: "tuple[]",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [],
               name: "passport",
               outputs: [
@@ -142,6 +173,35 @@ const contracts = {
                 {
                   internalType: "uint256",
                   name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "userToStampsCollected",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "countryName",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "stampTokenId",
                   type: "uint256",
                 },
               ],

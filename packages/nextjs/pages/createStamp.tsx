@@ -50,7 +50,9 @@ const Index = () => {
       ) : isSuccess ? (
         <div>Stamp added successfully</div>
       ) : (
-        <button onClick={createStampAsync}>Create Stamp</button>
+        <button className="p-2 border-green-500 border-2 rounded-md" onClick={createStampAsync}>
+          Create Stamp
+        </button>
       )}
     </div>
   );
@@ -58,5 +60,5 @@ const Index = () => {
 
 export default Index;
 
-// india => https://ibb.co/DbXQnH6
-// vietnam => https://ibb.co/hHW4nqb
+// india => https://i.ibb.co/rtPHJRL/india.png
+// vietnam => https://i.ibb.co/L6tcqGm/vietnam.png

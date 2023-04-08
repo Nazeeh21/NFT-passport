@@ -1,5 +1,6 @@
 import { useState } from "react";
 import exifr from "exifr";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const CollectStamp = () => {
   const [geoLocation, setGeoLocation] = useState<{
@@ -40,14 +41,16 @@ const CollectStamp = () => {
     }
   };
 
-  // const convertToDecimal = (coord, ref) => {
-  //   const degrees = coord[0];
-  //   const minutes = coord[1];
-  //   const seconds = coord[2];
-  //   const decimal = degrees + minutes / 60 + seconds / (60 * 60);
+  const {
+    writeAsync: createPassportAsync,
+    isLoading: createPassportLoading,
+    isSuccess,
+  } = useScaffoldContractWrite({
+    contractName: "MainContract",
+    functionName: "collectStamp",
+    args: [geoLocation?.countryName.toLowerCase()],
+  });
 
-  //   return ref === "S" || ref === "W" ? -decimal : decimal;
-  // };
   return (
     <div>
       <h1>Collect Stamp</h1>
@@ -55,8 +58,19 @@ const CollectStamp = () => {
       <input type="file" onChange={handleFileUpload} />
       {geoLocation && (
         <p>
-          Latitude: {geoLocation.latitude}, Longitude: {geoLocation.longitude}, country: {geoLocation.countryName}
+          Latitude: {geoLocation.latitude}, Longitude: {geoLocation.longitude}, country:{" "}
+          {geoLocation.countryName.toLowerCase()}
         </p>
+      )}
+
+      {isSuccess ? (
+        <div>Congrats! stamp collected successfully!</div>
+      ) : (
+        geoLocation && (
+          <button className="p-2 border-green-500 border-2 rounded-md" onClick={createPassportAsync} disabled={createPassportLoading}>
+            Add {geoLocation?.countryName} stamp
+          </button>
+        )
       )}
     </div>
   );
