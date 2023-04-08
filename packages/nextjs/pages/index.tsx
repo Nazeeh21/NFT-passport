@@ -1,57 +1,83 @@
 import Head from "next/head";
-import Link from "next/link";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { BigNumber } from "ethers";
 import type { NextPage } from "next";
-import { BugAntIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { useAccount } from "wagmi";
+import { Spinner } from "~~/components/Spinner";
+import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
+  const { address, isConnected } = useAccount();
+  const { data: passportContract } = useScaffoldContractRead({
+    contractName: "MainContract",
+    functionName: "passport",
+  });
+
+  const { data: userPassportTokenId } = useScaffoldContractRead({
+    contractName: "MainContract",
+    functionName: "userToPassportId",
+    args: [address],
+  });
+
+  const { data: userPassportMetadata } = useScaffoldContractRead({
+    contractName: "Passport",
+    functionName: "tokenURI",
+    args: [userPassportTokenId],
+  });
+
+  const { writeAsync: createPassportAsync, isLoading: createPassportLoading } = useScaffoldContractWrite({
+    contractName: "MainContract",
+    functionName: "createPassport",
+    args: [address],
+  });
+
+  const { data: stampForIndia } = useScaffoldContractRead({
+    contractName: "MainContract",
+    functionName: "userToStamp",
+    args: [address, "india"],
+  });
+
+  console.log("passportContract", passportContract);
+  console.log("userPassport", userPassport && BigNumber.from(userPassport).toNumber());
+  console.log("stampForIndia", stampForIndia);
+  if (!isConnected) {
+    return (
+      <div className="m-auto">
+        <div className="text-2xl">Connect wallet to get started</div>
+
+        <ConnectButton />
+      </div>
+    );
+  }
   return (
     <>
       <Head>
         <title>Scaffold-eth App</title>
         <meta name="description" content="Created with 🏗 scaffold-eth" />
       </Head>
-
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">scaffold-eth 2</span>
-          </h1>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold">packages/nextjs/pages/index.tsx</code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract <code className="italic bg-base-300 text-base font-bold">YourContract.sol</code> in{" "}
-            <code className="italic bg-base-300 text-base font-bold">packages/hardhat/contracts</code>
-          </p>
-        </div>
-
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <SparklesIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Experiment with{" "}
-                <Link href="/example-ui" passHref className="link">
-                  Example UI
-                </Link>{" "}
-                to build your own UI.
-              </p>
-            </div>
+      <div className="m-auto">
+        {userPassport && BigNumber.from(userPassport).toNumber() === 0 ? (
+          <div className="w-full">
+            <div className="text-xl">Passport does not exist.</div>
+            {createPassportLoading ? (
+              <Spinner width="50px" height="50px" />
+            ) : (
+              <button
+                onClick={createPassportAsync}
+                className="text-3xl px-4 py-2 hover:bg-[rgba(0,0,0,0)] transition-all duration-300 hover:text-black rounded-md bg-cover bg-[url('https://th.bing.com/th/id/OIG.MOBIH_c9N.8gjGfYHe5S?pid=ImgGn')] bg-[rgba(0,0,0,0.3)] text-white bg-blend-multiply font-bold"
+                style={{ backgroundPosition: "50% 43%" }}
+              >
+                Get Your Passport
+              </button>
+            )}
           </div>
-        </div>
+        ) : (
+          <div>
+            <div className="text-xl">Passport exists.</div>
+          </div>
+        )}
       </div>
+      <div></div>
     </>
   );
 };

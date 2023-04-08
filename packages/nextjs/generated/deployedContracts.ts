@@ -4,119 +4,23 @@ const contracts = {
       name: "localhost",
       chainId: "31337",
       contracts: {
-        CountryStamp: {
-          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        MainContract: {
+          address: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
           abi: [
             {
-              inputs: [
-                {
-                  internalType: "string",
-                  name: "_countryName",
-                  type: "string",
-                },
-                {
-                  internalType: "string",
-                  name: "_currency",
-                  type: "string",
-                },
-                {
-                  internalType: "string",
-                  name: "_flagSvg",
-                  type: "string",
-                },
-              ],
+              inputs: [],
               stateMutability: "nonpayable",
               type: "constructor",
             },
             {
-              anonymous: false,
               inputs: [
                 {
-                  indexed: true,
-                  internalType: "address",
-                  name: "owner",
-                  type: "address",
-                },
-                {
-                  indexed: true,
-                  internalType: "address",
-                  name: "approved",
-                  type: "address",
-                },
-                {
-                  indexed: true,
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
+                  internalType: "string",
+                  name: "countryName",
+                  type: "string",
                 },
               ],
-              name: "Approval",
-              type: "event",
-            },
-            {
-              anonymous: false,
-              inputs: [
-                {
-                  indexed: true,
-                  internalType: "address",
-                  name: "owner",
-                  type: "address",
-                },
-                {
-                  indexed: true,
-                  internalType: "address",
-                  name: "operator",
-                  type: "address",
-                },
-                {
-                  indexed: false,
-                  internalType: "bool",
-                  name: "approved",
-                  type: "bool",
-                },
-              ],
-              name: "ApprovalForAll",
-              type: "event",
-            },
-            {
-              anonymous: false,
-              inputs: [
-                {
-                  indexed: true,
-                  internalType: "address",
-                  name: "from",
-                  type: "address",
-                },
-                {
-                  indexed: true,
-                  internalType: "address",
-                  name: "to",
-                  type: "address",
-                },
-                {
-                  indexed: true,
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "Transfer",
-              type: "event",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "to",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "approve",
+              name: "collectStamp",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",
@@ -124,89 +28,12 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "owner",
-                  type: "address",
-                },
-              ],
-              name: "balanceOf",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "countryFlag",
-              outputs: [
-                {
                   internalType: "string",
                   name: "",
                   type: "string",
                 },
               ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "countryName",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "currency",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "string",
-                  name: "source",
-                  type: "string",
-                },
-              ],
-              name: "encode",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "pure",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "getApproved",
+              name: "countryStampAddresses",
               outputs: [
                 {
                   internalType: "address",
@@ -220,85 +47,27 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "owner",
-                  type: "address",
+                  internalType: "string",
+                  name: "countryName",
+                  type: "string",
                 },
-                {
-                  internalType: "address",
-                  name: "operator",
-                  type: "address",
-                },
-              ],
-              name: "isApprovedForAll",
-              outputs: [
-                {
-                  internalType: "bool",
-                  name: "",
-                  type: "bool",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "to",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "mint",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "name",
-              outputs: [
                 {
                   internalType: "string",
-                  name: "",
+                  name: "currency",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "dataUri",
                   type: "string",
                 },
               ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "ownerOf",
+              name: "createCountryStamp",
               outputs: [
                 {
                   internalType: "address",
                   name: "",
                   type: "address",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "registerStamp",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "_tokenId",
-                  type: "uint256",
                 },
               ],
               stateMutability: "nonpayable",
@@ -307,118 +76,30 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "from",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "to",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
+                  internalType: "string",
+                  name: "dataUri",
+                  type: "string",
                 },
               ],
-              name: "safeTransferFrom",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "from",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "to",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-                {
-                  internalType: "bytes",
-                  name: "data",
-                  type: "bytes",
-                },
-              ],
-              name: "safeTransferFrom",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "operator",
-                  type: "address",
-                },
-                {
-                  internalType: "bool",
-                  name: "approved",
-                  type: "bool",
-                },
-              ],
-              name: "setApprovalForAll",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "bytes4",
-                  name: "interfaceId",
-                  type: "bytes4",
-                },
-              ],
-              name: "supportsInterface",
+              name: "createPassport",
               outputs: [
                 {
-                  internalType: "bool",
+                  internalType: "uint256",
                   name: "",
-                  type: "bool",
+                  type: "uint256",
                 },
               ],
-              stateMutability: "view",
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
               inputs: [],
-              name: "symbol",
+              name: "passport",
               outputs: [
                 {
-                  internalType: "string",
+                  internalType: "contract Passport",
                   name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "_tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "tokenURI",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
+                  type: "address",
                 },
               ],
               stateMutability: "view",
@@ -428,23 +109,43 @@ const contracts = {
               inputs: [
                 {
                   internalType: "address",
-                  name: "from",
+                  name: "",
                   type: "address",
                 },
-                {
-                  internalType: "address",
-                  name: "to",
-                  type: "address",
-                },
+              ],
+              name: "userToPassportId",
+              outputs: [
                 {
                   internalType: "uint256",
-                  name: "tokenId",
+                  name: "",
                   type: "uint256",
                 },
               ],
-              name: "transferFrom",
-              outputs: [],
-              stateMutability: "nonpayable",
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              name: "userToStamp",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
           ],
