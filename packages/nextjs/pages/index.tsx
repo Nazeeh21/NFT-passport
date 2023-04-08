@@ -8,21 +8,20 @@ import PassportABI from "~~/abis/Passport.json";
 import Passport from "~~/components/Passport";
 import { Spinner } from "~~/components/Spinner";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-import { client } from "~~/utils/ipfs";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address, isConnected } = useAccount();
-  const [ipfsData, setIpfsData] = useState<string | undefined>();
   const { data: passportContract } = useScaffoldContractRead({
     contractName: "MainContract",
     functionName: "passport",
   });
 
-  const { data: userPassportTokenId } = useScaffoldContractRead({
+  const { data: userPassportTokenId, refetch: refetchuserPassportTokenId } = useScaffoldContractRead({
     contractName: "MainContract",
     functionName: "userToPassportId",
     args: [address],
+    watch: true
   });
 
   const { data: userPassportMetadata } = useContractRead({
@@ -43,23 +42,31 @@ const Home: NextPage = () => {
     // const blob = await response.blob();
     // const data = await blob.arrayBuffer();
     // const img = await client.add(new Uint8Array(data));
-    const dataToUpload = {
-      address,
-      date: new Date(),
-      // nationality: "indian"
-      image: "https://i.ibb.co/Bf3w6W2/OIG.jpg",
-    };
+    // const dataToUpload = {
+    //   address,
+    //   date: new Date(),
+    //   // nationality: "indian"
+    //   image: "https://i.ibb.co/Bf3w6W2/OIG.jpg",
+    // };
 
-    // console.log("ipfsResult", img.path);
-    setIpfsData(JSON.stringify(dataToUpload));
+    // // console.log("ipfsResult", img.path);
+    // setIpfsData(JSON.stringify(dataToUpload));
 
-    createPassportAsync();
+    await createPassportAsync();
+    await refetchuserPassportTokenId();
   };
 
   const { writeAsync: createPassportAsync, isLoading: createPassportLoading } = useScaffoldContractWrite({
     contractName: "MainContract",
     functionName: "createPassport",
-    args: [ipfsData],
+    args: [
+      JSON.stringify({
+        address,
+        date: new Date(),
+        // nationality: "indian"
+        image: "https://i.ibb.co/Bf3w6W2/OIG.jpg",
+      }),
+    ],
   });
 
   const { data: stampForIndia } = useScaffoldContractRead({
