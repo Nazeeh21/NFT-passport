@@ -67,7 +67,11 @@ const CollectStamp = () => {
         <div>Congrats! stamp collected successfully!</div>
       ) : (
         geoLocation && (
-          <button className="p-2 border-green-500 border-2 rounded-md" onClick={createPassportAsync} disabled={createPassportLoading}>
+          <button
+            className="p-2 border-green-500 border-2 rounded-md"
+            onClick={createPassportAsync}
+            disabled={createPassportLoading}
+          >
             Add {geoLocation?.countryName} stamp
           </button>
         )

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { BigNumber } from "ethers";
 import { useContractRead } from "wagmi";
 import CountryStamp from "~~/abis/CountryStamp.json";

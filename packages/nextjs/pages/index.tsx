@@ -1,15 +1,14 @@
-import { useState } from "react";
-import Head from "next/head";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { BigNumber } from "ethers";
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useAccount, useContractRead } from "wagmi";
 import PassportABI from "~~/abis/Passport.json";
 import Passport from "~~/components/Passport";
 import { Spinner } from "~~/components/Spinner";
+import YourStamps from "~~/components/YourStamps";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
-import YourStamps from "~~/components/YourStamps";
 
 const Home: NextPage = () => {
   const { address, isConnected } = useAccount();
@@ -111,6 +110,7 @@ const Home: NextPage = () => {
             )}
           </div>
         ) : (
+          // @ts-ignore
           <div>{userPassportMetadata && <Passport metadata={userPassportMetadata as string} />}</div>
         )}
       </div>

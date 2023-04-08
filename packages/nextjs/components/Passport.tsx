@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 const Passport = ({ metadata }: { metadata: string }) => {
   const data = JSON.parse(metadata);
   console.log("metadata", metadata);
