@@ -2070,6 +2070,8 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
     ethers: ^5.0.0
+    exif-js: ^2.3.0
+    exifr: ^7.1.3
     ipfs-http-client: ^60.0.0
     next: ^13.1.6
     nextjs-progressbar: ^0.0.16
@@ -7429,6 +7431,20 @@ __metadata:
     signal-exit: ^3.0.7
     strip-final-newline: ^3.0.0
   checksum: 1a4af799839134f5c72eb63d525b87304c1114a63aa71676c91d57ccef2e26f2f53e14c11384ab11c4ec479be1efa83d11c8190e00040355c2c5c3364327fa8e
+  languageName: node
+  linkType: hard
+
+"exif-js@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "exif-js@npm:2.3.0"
+  checksum: 5a9f5491bc7a804d4fd4d89d97343a822e916e044bc3c59734136e056bdc4a314aae63fd1ac18058f0a477dc90566f2ec0770ab9a30c26a47a52f1600161048b
+  languageName: node
+  linkType: hard
+
+"exifr@npm:^7.1.3":
+  version: 7.1.3
+  resolution: "exifr@npm:7.1.3"
+  checksum: c75a21e700378a29d226dd2c102d43679a68539ff1774b05ca19acce366ad47d056985e4f497afe7da6d0d8966d7dc73efb51acc11ff84fa57c9467e630c67ff
   languageName: node
   linkType: hard
 
