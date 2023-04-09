@@ -2,6 +2,8 @@
 
 Youtube video link: https://youtu.be/qb0VusN3qMg
 
+> Note: As of now, due to time constraint, you will be only able to collect the stamps of 4 countries i.e UAE, India, Vietnam and Indonesia
+
 # NFT Passport
 NFT Passport is a decentralized application that allows users to create and collect virtual passport stamps as NFTs based on the countries they visit. It is built on top of Ethereum and uses ERC-721 tokens to represent passports and country stamps.
 
