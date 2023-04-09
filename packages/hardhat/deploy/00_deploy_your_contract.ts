@@ -29,6 +29,8 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
+    // gasLimit: 30000000,
+    // gasPrice: 30000000,
   });
   // Get the deployed contract
   // const MainContract = (await hre.ethers.getContract("MainContract", deployer)).attach(mainContractAddress);
